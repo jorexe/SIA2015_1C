@@ -1,5 +1,8 @@
 package gps.fillZones;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
+import gps.SearchStrategy;
 import gps.api.GPSRule;
 import gps.api.GPSState;
 import gps.exception.NotAppliableException;
@@ -37,6 +40,19 @@ public class FillZoneRule implements GPSRule {
 	// llamada infinita
 	private void paint(byte nextColor, byte prevColor, FillZoneState state,
 						int i, int j) {
+		//Me fijo si los tengo que guardar como puntos mas proximos a las puntas.
+		if(i - j > state.maxI[0] - state.maxI[1]){
+			state.maxI[0] = i;
+			state.maxI[1] = j;
+		}
+		if(j - i > state.maxJ[1] - state.maxJ[0]){
+			state.maxJ[0] = i;
+			state.maxJ[1] = j;
+		}
+		if(i + j > state.maxIJ[0] + state.maxIJ[1]){
+			state.maxIJ[0] = i;
+			state.maxIJ[1] = j;
+		}
 		state.board[i][j] = nextColor;
 		if (i > 0) {
 			if (state.board[i - 1][j] == prevColor) {
