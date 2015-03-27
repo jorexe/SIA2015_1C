@@ -26,10 +26,10 @@ public class FillZoneRule implements GPSRule {
 	}
 
 	@Override
-	public GPSState evalRule(GPSState state) throws NotAppliableException {
+	public GPSState evalRule(GPSState state){
 		FillZoneState newState = ((FillZoneState)state).copy();
 		if(newState.movesLeft == 0 || newState.board[0][0] == colorToApply){
-			throw new NotAppliableException();
+			return null;
 		}
 		newState.movesLeft--;
 		paint(colorToApply, newState.board[0][0], newState, 0, 0);

@@ -96,11 +96,7 @@ public abstract class GPSEngine {
 		lastExploded.clear();
 		for (GPSRule rule : problem.getRules()) {
 			GPSState newState = null;
-			try {
-				newState = rule.evalRule(node.getState());
-			} catch (NotAppliableException e) {
-				// Do nothing
-			}
+			newState = rule.evalRule(node.getState());
 			if (newState != null
 					&& !checkBranch(node, newState)
 					&& !checkOpenAndClosed(node.getCost() + rule.getCost(),

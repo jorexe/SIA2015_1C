@@ -7,8 +7,8 @@ import gps.api.GPSState;
 public class FillZoneState implements GPSState{
 
 	public int movesLeft;
-	public static int countRow = 11;
-	public static int countCol = 11;
+	public static int countRow = 14;
+	public static int countCol = 14;
 	public static int countColors = 6;
 	public int maxI[] = {0,0};
 	public int maxJ[] = {0,0};
@@ -48,6 +48,8 @@ public class FillZoneState implements GPSState{
 		for(int i = 0 ; i< countRow; i++){
 			for(int j=0 ; j< countCol; j++){
 				s +=board[i][j] + " ";
+				//DESCOMENTAR PARA RELEASE EN CONSOLA QUE SE VEAN LOS COLORES
+//				s += (char)27 + "[3" + board[i][j] + ";" + "3" + + board[i][j] + "m" + "A";
 			}
 			s += "\n";
 		}
