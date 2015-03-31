@@ -38,8 +38,8 @@ public class DistanceHeuristicAdmissibleColor implements Heuristic {
 	
 	private int colorsLeft(FillZoneState state){
 		Set<Integer> colors = new HashSet<Integer>();
-		for(int i = 0; i < FillZoneState.countCol; i++){
-			for(int j = 0 ; j< FillZoneState.countRow; j++){
+		for(int i = 0; i < FillZoneState.countRow; i++){
+			for(int j = 0 ; j< FillZoneState.countCol; j++){
 				colors.add((int) state.board[i][j]);
 			}
 		}
