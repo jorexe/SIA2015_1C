@@ -1,6 +1,5 @@
 package gps;
 
-import gps.fillZones.Heuristic;
 
 public enum SearchStrategy {
 	BFS,

@@ -1,6 +1,5 @@
 package gps.fillZones;
 
-import gps.api.GPSState;
 
 public interface Heuristic {
 	

@@ -8,6 +8,6 @@ public class AStartComparator implements Comparator<GPSNode>{
 
 	@Override
 	public int compare(GPSNode o1, GPSNode o2) {
-			return o1.getValue().compareTo(o2.getValue());
+		return (Integer.valueOf(o1.getHValue() + o1.getCost()).compareTo(o2.getHValue() + o2.getCost()));
 	}
 }

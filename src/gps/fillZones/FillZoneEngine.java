@@ -3,11 +3,11 @@ package gps.fillZones;
 import gps.GPSEngine;
 import gps.GPSNode;
 
-import java.util.LinkedList;
-
 public class FillZoneEngine extends GPSEngine{
 
 	private int maxStep = 1;
+	public static boolean paint = false;;
+	private boolean ignore = false;
 	
 	@Override
 	public boolean isGoal(GPSNode node){
@@ -24,48 +24,72 @@ public class FillZoneEngine extends GPSEngine{
 	}
 	@Override
 	public void addNode(GPSNode node) {
+		generatedStates++;
 		switch( this.getStrategy()){
 			case DFS:{
 				add(node);
+				break;
 			}
 			case BFS:{
 				add(node);
+				break;
 			}
 			case ITERATIVE:{
 				addIterative(node);
+				break;
 			}
 			case AStar:{
-				addAStar(node);
+				addHeuristic(node);
+				break;
+//				addAStar(node);
 			}
 			case GREEDY:{
 				addGreedy(node);
+				break;
 			}
 			default: {
 				add(node);
 			}
 		}
-		System.out.println(node.getState());
-		
+		if(paint){
+			System.out.println(node.getState());
+		}
 	}
-	private void addAStar(GPSNode node){
-		node.setValue(problem.getHValue(node.getState()));
+	
+	private void addHeuristic(GPSNode node){
+		node.setHValue(problem.getHValue(node.getState()));
+		add(node);
 	}
+//	private void addAStar(GPSNode node){
+//		node.setHValue(problem.getHValue(node.getState()) + node.getCost());
+//		add(node);
+//	}
 	private void addGreedy(GPSNode node){
-		node.setValue(problem.getHValue(node.getState()) + node.getCost());
+		node.setHValue(problem.getHValue(node.getState()));
+		lastExploded.add(node);
 	}
 	private void add(GPSNode node){
 		this.open.add(node);
 	}
 	private void addIterative(GPSNode node){
+		if(node.getCost() < maxStep){
+			ignore = false;
+		}
+		if(ignore){
+			return;
+		}
 		int step = calculateHeight(node);
-		if(step < maxStep){
+		if(step <= maxStep){
 			add(node);
+		}else{
+			closed.clear();
 		}
 		if(open.isEmpty()){
+			ignore = true;
+			closed.clear();
 			maxStep++;
 			GPSNode rootNode = new GPSNode(problem.getInitState(), 0);
 			add(rootNode);
-			
 		}
 	}
 	private int calculateHeight(GPSNode node){

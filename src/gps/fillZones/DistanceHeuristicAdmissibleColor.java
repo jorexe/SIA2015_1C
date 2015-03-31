@@ -1,9 +1,11 @@
 package gps.fillZones;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.PriorityQueue;
+import java.util.Set;
 
-public class DistanceHeuristicAdmissible implements Heuristic {
+public class DistanceHeuristicAdmissibleColor implements Heuristic {
 	PriorityQueue<Integer> lenghtsList = new PriorityQueue<Integer>(50,
 			new Comparator<Integer>() {
 		
@@ -26,24 +28,22 @@ public class DistanceHeuristicAdmissible implements Heuristic {
 				FillZoneState.countRow - 1, FillZoneState.countCol - 1, state);
 		int maxValue = Math.max(Math.max(minJ, minI), minIJ);
 		if(maxValue > state.movesLeft){
-		return Integer.MAX_VALUE;
+			return Integer.MAX_VALUE;
 		}
-		if(maxValue == 1){
-			return checkGoal(state) ? 0 : 1;
+		if(maxValue < FillZoneState.countColors){
+			return colorsLeft(state);
 		}
 		return maxValue;
 	}
 	
-	private boolean checkGoal(FillZoneState state){
-		byte firstColor = state.board[0][0];
-		for(int i = 0; i < FillZoneState.countRow ; i++){
-			for(int j=0; j< FillZoneState.countCol ; j++){
-				if(firstColor != state.board[i][j]){
-					return false;
-				}
+	private int colorsLeft(FillZoneState state){
+		Set<Integer> colors = new HashSet<Integer>();
+		for(int i = 0; i < FillZoneState.countCol; i++){
+			for(int j = 0 ; j< FillZoneState.countRow; j++){
+				colors.add((int) state.board[i][j]);
 			}
 		}
-		return true;
+		return colors.size() - 1;
 	}
 
 	private int getMinimunDistance(int i, int j, int finalI, int finalJ, FillZoneState state) {

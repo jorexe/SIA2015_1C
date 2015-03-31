@@ -2,7 +2,7 @@ package gps;
 
 import gps.api.GPSState;
 
-public class GPSNode implements Comparable<GPSNode>{
+public class GPSNode{
 
 	private GPSState state;
 
@@ -10,7 +10,7 @@ public class GPSNode implements Comparable<GPSNode>{
 
 	private Integer cost;
 	
-	private Integer value;
+	private Integer hValue;
 
 	public GPSNode(GPSState state, Integer cost) {
 		super();
@@ -46,15 +46,11 @@ public class GPSNode implements Comparable<GPSNode>{
 		return this.parent.getSolution() + "\n" + this.state;
 	}
 	
-	public void setValue(Integer hValue){
-		this.value = hValue;
+	public void setHValue(Integer hValue){
+		this.hValue = hValue;
 	}
-	public Integer getValue(){
-		return value;
+	public Integer getHValue(){
+		return hValue;
 	}
 
-	@Override
-	public int compareTo(GPSNode o) {
-		return value.compareTo(o.getValue());
-	}
 }

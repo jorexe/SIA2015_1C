@@ -3,7 +3,6 @@ package gps;
 import gps.api.GPSProblem;
 import gps.api.GPSRule;
 import gps.api.GPSState;
-import gps.exception.NotAppliableException;
 import gps.fillZones.AStartComparator;
 import gps.fillZones.GreedyComparator;
 
@@ -17,22 +16,23 @@ public abstract class GPSEngine {
 
 	public Queue<GPSNode> open;
 	public List<GPSNode> closed = new ArrayList<GPSNode>();
-	public PriorityQueue<GPSNode> lastExploded = new PriorityQueue<GPSNode>();
+	public PriorityQueue<GPSNode> lastExploded = new PriorityQueue<GPSNode>(200, new GreedyComparator());
 
 	protected GPSProblem problem;
 
 	// Use this variable in the addNode implementation
 	private SearchStrategy strategy;
-
+	protected long generatedStates = 0;
+	private long explosionCounter = 0;
+	
 	public void engine(GPSProblem myProblem, SearchStrategy myStrategy) {
-
+		long elapsedTime = System.currentTimeMillis();
 		problem = myProblem;
 		strategy = myStrategy;
 
 		GPSNode rootNode = new GPSNode(problem.getInitState(), 0);
 		boolean finished = false;
 		boolean failed = false;
-		long explosionCounter = 0;
 		createList(myStrategy);
 		open.add(rootNode);
 		while (!failed && !finished) {
@@ -41,11 +41,9 @@ public abstract class GPSEngine {
 			} else {
 				GPSNode currentNode = open.poll();
 				closed.add(currentNode);
-				open.remove(0);
 				if (isGoal(currentNode)) {
 					finished = true;
-					System.out.println(currentNode.getSolution());
-					System.out.println("Expanded nodes: " + explosionCounter);
+					printResult(currentNode);
 				} else {
 					explosionCounter++;
 					explode(currentNode);
@@ -58,24 +56,30 @@ public abstract class GPSEngine {
 		} else if (failed) {
 			System.err.println("FAILED! solution not found!");
 		}
+		System.out.println("Elapsed time: " + (System.currentTimeMillis() - elapsedTime) + "ms");
 	}
 
 	public void createList(SearchStrategy strategy) {
 		switch (this.getStrategy()) {
 			case DFS: {
 				open = new AddFirstList<GPSNode>();
+				break;
 			}
 			case BFS: {
 				open = new LinkedList<GPSNode>();
+				break;
 			}
 			case ITERATIVE: {
 				open = new AddFirstList<GPSNode>();
+				break;
 			}
 			case AStar: {
 				open = new PriorityQueue<GPSNode>(200,new AStartComparator());
+				break;
 			}
 			case GREEDY: {
-				open = new PriorityQueue<GPSNode>(200,new GreedyComparator());
+				open = new AddFirstList<GPSNode>();
+				break;
 			}
 			default: {
 				open = new AddFirstList<GPSNode>(); // El default es DFS
@@ -93,7 +97,6 @@ public abstract class GPSEngine {
 			System.err.println("No rules!");
 			return false;
 		}
-		lastExploded.clear();
 		for (GPSRule rule : problem.getRules()) {
 			GPSState newState = null;
 			newState = rule.evalRule(node.getState());
@@ -105,6 +108,11 @@ public abstract class GPSEngine {
 						+ rule.getCost());
 				newNode.setParent(node);
 				addNode(newNode);
+			}
+		}
+		if(strategy == SearchStrategy.GREEDY){
+			while(!lastExploded.isEmpty()){
+				open.add(lastExploded.poll());
 			}
 		}
 		return true;
@@ -135,6 +143,14 @@ public abstract class GPSEngine {
 
 	public SearchStrategy getStrategy() {
 		return strategy;
+	}
+	
+	private void printResult(GPSNode node){
+		System.out.println(node.getSolution());
+		System.out.println("Cost: " + node.getCost());
+		System.out.println("Expanded nodes: " + explosionCounter);
+		System.out.println("Generated states: " + generatedStates);
+		System.out.println("Frontier: " + open.size());
 	}
 
 	public abstract void addNode(GPSNode node);

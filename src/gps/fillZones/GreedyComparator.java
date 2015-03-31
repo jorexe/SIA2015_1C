@@ -7,13 +7,14 @@ public class GreedyComparator implements Comparator<GPSNode>{
 
 	@Override
 	public int compare(GPSNode o1, GPSNode o2) {
-		if(o1.getCost() < o2.getCost()){
-			return -1;
-		}else if (o1.getCost() < o2.getCost()){
-			return o1.getValue().compareTo(o2.getValue());
-		}else{
-			return 1;
-		}
+		return -1*o1.getHValue().compareTo(o2.getHValue());
+//		if(o1.getCost() < o2.getCost()){
+//			return -1;
+//		}else if (o1.getCost() < o2.getCost()){
+//			return o1.getHValue().compareTo(o2.getHValue());
+//		}else{
+//			return 1;
+//		}
 	}
 
 }
