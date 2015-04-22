@@ -4,9 +4,8 @@ function ret = neuron (inputs,uc, activation)
 	% umbral = rand(1 , n);
 	%  uc = [umbral ; connections];
 	% inputs = [-1 , n1 , n2];
-
 	out = inputs * uc;
-	ret = arrayfun(activation,out);
+	ret = out;
 	% printf("%f\n", out);
 end
 
