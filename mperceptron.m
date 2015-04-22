@@ -6,9 +6,9 @@ function ret = mperceptron(input,lengthOut,hidenN, iterations, rate, g, gDerivad
 	w_2 = rand(hidenN+ 1, lengthOut);
 	
 
-	test = [-2:0.1:2];
-	test = [-1.8 -0.85 0.8 1.8];
-	test = [-1.9:0.01:-1.7 -1.7:0.2:-0.9 -0.9:0.01:-0.75 -0.75:0.2:0.7 0.7:0.01:0.9 0.9:0.2:1.75 1.75:0.01:1.85 1.85:0.1:2]
+	% test = [-2:0.01:2];
+	% test = [-1.8 -0.85 0.8 1.8];
+	test = [-2:0.01:-1.7 -1.7:0.2:-0.9 -0.9:0.01:-0.75 -0.75:0.2:0.7 0.7:0.01:0.9 0.9:0.2:1.75 1.75:0.01:1.85 1.85:0.01:2]
 	% test = [0.5 1];
 	expectedOut = [arrayfun(@sinhcos,test)];
 	for i=1:iterations
