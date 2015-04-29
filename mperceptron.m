@@ -1,7 +1,6 @@
-function ret = mperceptron(input,lengthOut,hidenN, iterations, rate, g, gDerivada)
+function ret = mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada)
 	% sinh(x)cos(x^2)
 
-	n = length(input);
 	w_1 = rand(n + 1,hidenN);
 	w_2 = rand(hidenN+ 1, lengthOut);
 	
