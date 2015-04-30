@@ -1,4 +1,4 @@
-mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada):
+mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada,w, graph):
 	PARAMS:
 		n : longitud de la entrada, en nuestro caso 1.
 		lengthOut : longitud de salida , en nuestro caso 1.
@@ -7,6 +7,9 @@ mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada):
 		rate : coeficiente de aprendizaje.
 		g: funcion de activación.
 		gDerivada : funcion de activación derivada.
+		w: Si quiero que empieze con unos pesos especifico, le mando una cell con los pesos
+		Si es 0, elige random.
+		graph: 1 si quiero que vaya graficando
 
 		retorna : una cell que adentro tiene las matrices de conexiones.
 
@@ -19,7 +22,7 @@ EJ:
 	b = @activationD
 
 2) Ejecutar mperceptron y guardarte en una variable lo que devuelve:
-	EJ : w = mperceptron(1,1,10,1000,0.1,a,b).
+	EJ : w = mperceptron(1,1,10,1000,0.1,a,b,0,1).
 3) Para poder compararlo ejecutar pltoComparation:
 	EJ : plotComparation(w,a)
 

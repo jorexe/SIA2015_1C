@@ -9,7 +9,9 @@ function ret = plotComparation( w,g )
 		out_2(i) = neuron([-1 inputs_2],w_2,g);
 	end
 	% plot(input,out_2, '*', sinhcos(input), '-')
-	plot(input, out_2, '*')
 	hold on
-	plot(input, sinhcos(input))
+	plot(input, out_2, 'r*')
+	title ("sinh(x)*cos(x^2)");
+	plot(input, sinhcos(input), 'b-')
+	% hold off
 end
