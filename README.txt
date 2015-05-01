@@ -1,4 +1,4 @@
-mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada,w_1, w_2, graph, alpha):
+mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, acceptedError, w_1, w_2, graph, alpha):
 	PARAMS:
 		n : longitud de la entrada, en nuestro caso 1.
 		lengthOut : longitud de salida , en nuestro caso 1.
@@ -7,6 +7,7 @@ mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada,w_1, w_2, graph, 
 		rate : coeficiente de aprendizaje.
 		g: funcion de activación.
 		gDerivada : funcion de activación derivada.
+                acceptedError: Error de aceptación, la ejecución finalizará si el error es menor a este valor.
 		w_1: Si quiero que empieze con unos pesos especifico w_1
 		w_2: idem que w_1 nada mas que van a ser los pesos de capa oculta- output
 		Si es 0, elige random.
@@ -24,7 +25,6 @@ EJ:
 	b = @activationD
 
 2) Ejecutar mperceptron y guardarte en una variable lo que devuelve:
-	EJ : w = mperceptron(1,1,10,1000,0.1,a,b,0,0,1,0.9).
+	EJ : w = mperceptron(1,1,10,1000,0.1,a,b,0,0,0,1,0.9).
 3) Para poder compararlo ejecutar pltoComparation:
 	EJ : plotComparation(w,a)
-
