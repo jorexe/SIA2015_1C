@@ -1,4 +1,4 @@
-function ret = mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, acceptedError, w_1, w_2 , graph,alpha)
+function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, acceptedError, w_1, w_2 , graph,alpha,etaAdaptation,etainc,etadec)
 	% sinh(x)cos(x^2)
 	% Si hace falta inicializo los pesos, sino pruebo con los que me pasaron.
 	
@@ -10,6 +10,11 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, a
 	end
 	previousDeltaW_2 = zeros(hidenN+1,lengthOut);
 	previousDeltaW_1 = zeros(n+1,hidenN);
+	previousW_1 = zeros(n + 1,hidenN);
+	previousW_2 = zeros(hidenN+ 1, lengthOut);
+	etait=0;
+	etaincs=0;
+	etadecs=0;
 
 
 	% inputPattern = [-2:0.01:2];
@@ -20,8 +25,13 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, a
 	expectedOut = [arrayfun(@sinhcos,inputPattern)];
 	expectedOutTest = [arrayfun(@sinhcos,testPattern)];
 	errorAcumulation = 0;
+	%Epocas
+	% i = 1;
 	for i=1:iterations
 		randv = randperm(length(inputPattern));
+		%Me guardo los pesos antes de realizar la iteración de los patrones de entrada
+		previousW_2 = w_2;
+		previousW_1 = w_1;
 		for t=1:length(inputPattern)
 			%Tomo valores random de mi conjunto de patrones de entrada
 			n1 = inputPattern(:,randv(t));
@@ -36,13 +46,13 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, a
 		    delta_1 = arrayfun(gDerivada,out_1).*(w_2(2:rows(w_2),:)*delta_2')';
 		    % Actualizo los pesos.
 		    for j = 1: length(out_2)
-		    	delta_w2(:,j) = rate  * delta_2(j) * [-1 inputs_2]';
-		      	w_2(:,j) = w_2(:,j) + delta_w2(:,j)+ previousDeltaW_2(:,j)  ;
+		    	delta_w2(:,j) = eta  * delta_2(j) * [-1 inputs_2]';
+		      	w_2(:,j) = w_2(:,j) + delta_w2(:,j)+ previousDeltaW_2(:,j)*alpha ;
 		    end
 		    previousDeltaW_2 = delta_w2;
 		    for j = 1: length(out_1)
-		    	delta_w1(:,j) = rate  * delta_1(j) * [-1 inputs_1]';
-		      	w_1(:,j) = w_1(:,j) + delta_w1(:,j) + previousDeltaW_1(:,j) ;
+		    	delta_w1(:,j) = eta  * delta_1(j) * [-1 inputs_1]';
+		      	w_1(:,j) = w_1(:,j) + delta_w1(:,j) + previousDeltaW_1(:,j)*alpha ;
 		    end
 		    previousDeltaW_1 = delta_w1;
 		end
@@ -56,19 +66,47 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, a
 			errorAcumulation += (expected - out_2)^2;
 		end
 		% Promediamos la sumas de los errores y checkeamos si esta en lo aceptado.
+		if(i > 1)
+			prevpromError = promError;
+		end
 		promError = errorAcumulation / t;
 		if(promError < acceptedError)
 			printf ("Corte por aceptación")
 			break
 		end
+
+		%Valido los errores promedio para aproximar el eta
+		if(etaAdaptation == 1 && i > 1)
+			etait++;
+			% printf("promError: %f, prevpromError: %f",promError,prevpromError);
+			if(promError > prevpromError)
+				%Si el error es mayor que en la iteración anterior, disminiyuo el eta
+				%y vuelvo a utilizar los w's anteriores
+				promError = prevpromError;
+				%Esto no se hace para salir de minimos
+				% w_1 = previousW_1;
+				% w_2 = previousW_2;
+				eta = eta - eta*etadec;
+				etadecs++;
+				% i--;
+			else
+				%Aumento el eta proporcionalmente
+				eta = eta+etainc;
+				etaincs++;
+			end
+			
+		end
+
 		% Voy imprimiendo la aproximación de la función.
 		w = {w_1 w_2};
 		if(graph == 1)
-				clf('reset');
-				plotComparation(w,g);
-				refresh;
+			clf('reset');
+			plotComparation(w,g);
+			refresh;
 		end
 		errorAcumulation = 0;
+		% i++;
 	end
-	ret = {w_1 w_2}
+	printf("Iteraciones: %d\nIncrementos de eta: %d\nDecrementos de eta: %d\n",etait,etaincs,etadecs);
+	ret = {w_1 w_2 promError};
 end

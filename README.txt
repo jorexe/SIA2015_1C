@@ -1,4 +1,4 @@
-mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, acceptedError, w_1, w_2, graph, alpha):
+mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, acceptedError, w_1, w_2, graph, alpha,etaAdaptation,etainc,etadec):
 	PARAMS:
 		n : longitud de la entrada, en nuestro caso 1.
 		lengthOut : longitud de salida , en nuestro caso 1.
@@ -13,8 +13,10 @@ mperceptron(n,lengthOut,hidenN, iterations, rate, g, gDerivada, acceptedError, w
 		Si es 0, elige random.
 		graph: 1 si quiero que vaya graficando
 		alpha: coeficiente de momentum.
-
-		retorna : una cell que adentro tiene las matrices de conexiones.
+		etaAdaptation: 0 si quiero utilizar el eta adaptative, 0 si no
+		etainc: incremento constante del eta
+		etadec: decremento geometrico de eta (eta = eta - eta*etadec)
+		retorna : una cell que adentro tiene las matrices de conexiones y el error promedio.
 
 
 Pasos para usar la red neuronal :
@@ -25,6 +27,8 @@ EJ:
 	b = @activationD
 
 2) Ejecutar mperceptron y guardarte en una variable lo que devuelve:
-	EJ : w = mperceptron(1,1,10,1000,0.1,a,b,0,0,0,1,0.9).
+	EJ : w = mperceptron(1,1,10,1000,0.1,a,b,0,0,0,1,0.9,1,0.02,0.1).
 3) Para poder compararlo ejecutar pltoComparation:
 	EJ : plotComparation(w,a)
+
+Otro EJ: plotComparation(mperceptron(1,1,4,100,0.1,@activation,@activationD,0,0,0,0,0.9,1,0.02,0.1),@activation)
