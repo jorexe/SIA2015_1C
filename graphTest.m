@@ -1,5 +1,6 @@
 function graphTest(neuronsstart,neuronsend,iterations)
 	for i=neuronsstart:neuronsend
+		a = ["Resolviendo para " num2str(i) " neuronas."];
 		w = mperceptron(1,1,i,iterations,0.1,@activation,@activationD,0,0,0,0,0.9);
 		clf('reset');
 		plotComparation(w,@activation);
