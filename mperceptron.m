@@ -15,8 +15,6 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 	etait=0;
 	etaincs=0;
 	etadecs=0;
-
-
 	% inputPattern = [-2:0.01:2];
 	% inputPattern = [-1.8 -0.85 0.8 1.8];
 	inputPattern = [-2:0.001:-1.8 -2:0.01:-1.7 -1.7:0.2:-1.2 -1.2:0.01:-0.75 -0.75:0.2:0.7 0.7:0.01:0.9 0.9:0.2:1.75 1.75:0.01:1.85 1.85:0.01:2];
@@ -109,5 +107,5 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 		% i++;
 	end
 	printf("Iteraciones: %d\nIncrementos de eta: %d\nDecrementos de eta: %d\n",etait,etaincs,etadecs);
-	ret = {w_1 w_2 promError};
+	ret = {w_1 w_2 promError etaincs etadecs};
 end
