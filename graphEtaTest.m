@@ -18,7 +18,9 @@ function graphEtaTest(incstart,incend,incstep,decstart,decend,decstep,filename)
 				printf("Errores %f %f %f %f\n",w1{3},w2{3},w3{3},w4{3});
 				sumerror = [w1{3},w2{3},w3{3},w4{3}];
 				avgerror = mean(sumerror);
-				fprintf(file_id,"Para eta=%f etainc=%f etadec=%f iteraciones=%d el error es=%f.\n",eta,i,j,iterations,avgerror);
+				etaincs = mean([w1{4},w2{4},w3{4},w4{4}]);
+				etadecs = mean([w1{5},w2{5},w3{5},w4{5}]);
+				fprintf(file_id,"eta=%f,etainc=%f,etadec=%f,etaincs=%f,etadecs=%f,its=%d,error=%f,\n",eta,i,j,etaincs,etadecs,iterations,avgerror);
 				fflush(file_id);
 				it++;
 			end
