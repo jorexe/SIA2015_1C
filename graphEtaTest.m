@@ -1,6 +1,7 @@
 function graphEtaTest(incstart,incend,incstep,decstart,decend,decstep,filename)
 	neurons = 5;
 	iterations = 100;
+	filename = ["data/" filename];
 	file_id = fopen(filename, 'w+');
 	inc = incstart:incstep:incend;
 	dec = decstart:decstep:decend;
@@ -12,9 +13,17 @@ function graphEtaTest(incstart,incend,incstep,decstart,decend,decstep,filename)
 				printf("Resolviendo para eta=%f etainc=%f etadec=%f iteraciones=%d. Etapa %d de %d\n",eta,i,j,iterations,it,totalits);
 				fflush(stdout);
 				w1 = mperceptron(1,1,neurons,100,eta,@activation,@activationD,0,0,0,0,0.9,1,i,j);
+				printf("Error 1:%f \n",w1{3});
+				fflush(stdout);
 				w2 = mperceptron(1,1,neurons,100,eta,@activation,@activationD,0,0,0,0,0.9,1,i,j);
+				printf("Error 2:%f \n",w2{3});
+				fflush(stdout);
 				w3 = mperceptron(1,1,neurons,100,eta,@activation,@activationD,0,0,0,0,0.9,1,i,j);
+				printf("Error 3:%f \n",w3{3});
+				fflush(stdout);
 				w4 = mperceptron(1,1,neurons,100,eta,@activation,@activationD,0,0,0,0,0.9,1,i,j);
+				printf("Error 4:%f \n",w4{3});
+				fflush(stdout);
 				printf("Errores %f %f %f %f\n",w1{3},w2{3},w3{3},w4{3});
 				sumerror = [w1{3},w2{3},w3{3},w4{3}];
 				avgerror = mean(sumerror);
