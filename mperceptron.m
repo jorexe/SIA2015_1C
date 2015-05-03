@@ -42,17 +42,18 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 			%Calculo los delta
 		    delta_2 = arrayfun(gDerivada,out_2).*(expected - out_2);
 		    delta_1 = arrayfun(gDerivada,out_1).*(w_2(2:rows(w_2),:)*delta_2')';
-		    % Actualizo los pesos.
-		    for j = 1: length(out_2)
-		    	delta_w2(:,j) = eta  * delta_2(j) * [-1 inputs_2]';
-		      	w_2(:,j) = w_2(:,j) + delta_w2(:,j)+ previousDeltaW_2(:,j)*alpha ;
-		    end
-		    previousDeltaW_2 = delta_w2;
-		    for j = 1: length(out_1)
-		    	delta_w1(:,j) = eta  * delta_1(j) * [-1 inputs_1]';
-		      	w_1(:,j) = w_1(:,j) + delta_w1(:,j) + previousDeltaW_1(:,j)*alpha ;
-		    end
+		    % Actualizo los pesos. 
+		    % Silenciamos el warning momentaneamente porque queremos que se
+		    % haga broadcast del .*, esto es multiplicar cada elemento de
+		    % delta_1 por [-1 inputs_1]
+		    warning ("off", "Octave:broadcast");
+		    delta_w1 = eta  * delta_1 .* [-1 inputs_1]';
+		    delta_w2 = eta  * delta_2 .* [-1 inputs_2]';
+		    warning ("on", "Octave:broadcast");
+		    w_1 = w_1 + delta_w1 + previousDeltaW_1 * alpha ;
 		    previousDeltaW_1 = delta_w1;
+		    w_2 = w_2 + delta_w2 + previousDeltaW_2 * alpha ;
+		    previousDeltaW_2 = delta_w2;
 		end
 		% Calculamos el error cuadratico medio
 		for t=1:length(testPattern)
