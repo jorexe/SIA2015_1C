@@ -1,8 +1,8 @@
-Para eta=0.050000 etainc=0.010000 etadec=0.100000 iteraciones=100 el error es=0.019588.
-Para eta=0.050000 etainc=0.010000 etadec=0.200000 iteraciones=100 el error es=0.024735.
-Para eta=0.050000 etainc=0.010000 etadec=0.300000 iteraciones=100 el error es=0.028278.
-Para eta=0.050000 etainc=0.010000 etadec=0.400000 iteraciones=100 el error es=0.040883.
-Para eta=0.050000 etainc=0.010000 etadec=0.500000 iteraciones=100 el error es=0.044674.
+Para eta=0.100000 etainc=0.010000 etadec=0.100000 iteraciones=100 el error es=0.024405.
+Para eta=0.100000 etainc=0.010000 etadec=0.200000 iteraciones=100 el error es=0.019727.
+Para eta=0.100000 etainc=0.010000 etadec=0.300000 iteraciones=100 el error es=0.039962.
+Para eta=0.100000 etainc=0.010000 etadec=0.400000 iteraciones=100 el error es=0.039347.
+Para eta=0.100000 etainc=0.010000 etadec=0.500000 iteraciones=100 el error es=0.032780.
 Para eta=0.050000 etainc=0.020000 etadec=0.100000 iteraciones=100 el error es=0.012440.
 Para eta=0.050000 etainc=0.020000 etadec=0.200000 iteraciones=100 el error es=0.129600.
 Para eta=0.050000 etainc=0.020000 etadec=0.300000 iteraciones=100 el error es=0.026506.
