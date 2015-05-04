@@ -67,10 +67,10 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 		end
 		% Promediamos la sumas de los errores y checkeamos si esta en lo aceptado.
 		if(i > 1)
-			prevpromError = promError;
+			prevpromError = promError(i-1);
 		end
-		promError = errorAcumulation / t;
-		if(promError < acceptedError)
+		promError(i) = errorAcumulation / t;
+		if(promError(i) < acceptedError)
 			printf ("Corte por aceptación")
 			break
 		end
@@ -79,10 +79,10 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 		if(etaAdaptation == 1 && i > 1)
 			etait++;
 			% printf("promError: %f, prevpromError: %f",promError,prevpromError);
-			if(promError > prevpromError)
+			if(promError(i) > prevpromError)
 				%Si el error es mayor que en la iteración anterior, disminiyuo el eta
 				%y vuelvo a utilizar los w's anteriores
-				promError = prevpromError;
+				promError(i) = prevpromError;
 				%Esto no se hace para salir de minimos
 				% w_1 = previousW_1;
 				% w_2 = previousW_2;
