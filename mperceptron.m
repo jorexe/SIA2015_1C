@@ -18,6 +18,7 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 	% inputPattern = [-2:0.01:2];
 	% inputPattern = [-1.8 -0.85 0.8 1.8];
 	inputPattern = [-2:0.001:-1.8 -2:0.01:-1.7 -1.7:0.2:-1.2 -1.2:0.01:-0.75 -0.75:0.2:0.7 0.7:0.01:0.9 0.9:0.2:1.75 1.75:0.01:1.85 1.85:0.01:2];
+	%inputPattern = [ -1.9:0.01:-1.7 , -1.1:0.01:0.09 , 0.7:0.1:0.9 1.85:0.01:2 ];
 	testPattern = [-2 : 0.01 : 2];
 	% inputPattern = [0.5 1];
 	expectedOut = [arrayfun(@sinhcos,inputPattern)];
@@ -106,6 +107,6 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 		errorAcumulation = 0;
 		% i++;
 	end
-	printf("Iteraciones: %d\nIncrementos de eta: %d\nDecrementos de eta: %d\n",etait,etaincs,etadecs);
+	% printf("Iteraciones: %d\nIncrementos de eta: %d\nDecrementos de eta: %d\n",etait,etaincs,etadecs);
 	ret = {w_1 w_2 promError etaincs etadecs};
 end

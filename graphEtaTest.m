@@ -2,7 +2,7 @@ function graphEtaTest(incstart,incend,incstep,decstart,decend,decstep,filename)
 	neurons = 5;
 	iterations = 100;
 	filename = ["data/" filename];
-	file_id = fopen(filename, 'w+');
+	file_id = fopen(filename, 'a+');
 	inc = incstart:incstep:incend;
 	dec = decstart:decstep:decend;
 	totalits = length(inc)*length(dec)*2;
