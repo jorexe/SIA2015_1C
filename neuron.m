@@ -1,5 +1,5 @@
 %% : function description
-function ret = neuron (inputs,uc, activation)
+function ret = neuron (inputs,uc)
 	% connections = rand(2*n,n);
 	% umbral = rand(1 , n);
 	%  uc = [umbral ; connections];
