@@ -1,0 +1,19 @@
+function graphNeuronTest(neuronsstart,neuronsend,iterations,extra)
+	file_id = fopen(["data/" extra ".txt"], 'a+');
+	for j=neuronsstart:neuronsend
+		for i=neuronsstart:neuronsend
+			printf("Resolviendo para %d neuronas\n",i);
+			fflush(stdout);
+			w = mperceptron(1,1,i,j,iterations,0.1,@activation,@activationD,0,0,0,0,0.9,0,0,0);
+			clf('reset');
+			plotComparation(w,@activation);
+			name = ["graphs/neu1" num2str(i) "neu2" num2str(j) "it" num2str(iterations) extra ".jpg"];
+			%print -djpg name;
+			eval(["print -djpg " name]);
+			fprintf(file_id,"neurons1=%d,neurons2=%d,iterations=%d,error=%f,\n",i,j,iterations,w{3});
+			fflush(file_id);
+			%print(name,"jpg");
+		end
+	end
+	fclose(file_id);
+end
