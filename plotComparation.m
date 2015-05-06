@@ -4,9 +4,9 @@ function ret = plotComparation( w,g )
 
 	input = [-2:0.1:2];
 	for i=1:length(input)
-		out_1 = neuron([-1 input(i)],w_1,g);
+		out_1 = neuron([-1 input(i)],w_1);
 		inputs_2 = arrayfun(g,out_1);
-		out_2(i) = neuron([-1 inputs_2],w_2,g);
+		out_2(i) = neuron([-1 inputs_2],w_2);
 		expected = sinhcos(input(i));
 		errors(i) = expected - out_2(i);
 	end

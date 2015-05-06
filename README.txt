@@ -16,9 +16,15 @@ mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, acceptedError, w_
 		etaAdaptation: 0 si quiero utilizar el eta adaptative, 0 si no
 		etainc: incremento constante del eta
 		etadec: decremento geometrico de eta (eta = eta - eta*etadec)
-		retorna : una cell que adentro tiene las matrices de conexiones y el error promedio.
+		retorna : una cell que adentro tiene las matrices de conexiones y un array con los errores promedio.
 
+doublemperceptron(n,lengthOut,hidenN,hidenN2, iterations, eta, g, gDerivada, acceptedError, w_1, w_2,w_3 , graph,alpha,etaAdaptation,etainc,etadec) :
 
+	Idem que mperceptron.
+	hidenN2: Cantidad de neuronas en la ultima capa
+	w_3: matriz de pesos para la ultima capa.
+
+	
 Pasos para usar la red neuronal :
 
 1) asignar a dos variables la función de activación y su derivada.
