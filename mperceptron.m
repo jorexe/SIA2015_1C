@@ -15,14 +15,14 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 	etait=0;
 	etaincs=0;
 	etadecs=0;
-	inputPattern = [-2:0.02:2];
+	inputPattern = [11];
 	% inputPattern = [-1.8 -0.85 0.8 1.8];
 	% inputPattern = [-2:0.001:-1.8 -2:0.01:-1.7 -1.7:0.2:-1.2 -1.2:0.01:-0.75 -0.75:0.2:0.7 0.7:0.01:0.9 0.9:0.2:1.75 1.75:0.01:1.85 1.85:0.01:2];
 	% inputPattern = [ -1.9:0.01:-1.7 , -1.1:0.01:0.09 , 0.7:0.1:0.9 1.85:0.01:2 ];
-	testPattern = [-2 : 0.01 : 2];
+	testPattern = [11];
 	% inputPattern = [0.5 1];
-	expectedOut = [arrayfun(@sinhcos,inputPattern)];
-	expectedOutTest = [arrayfun(@sinhcos,testPattern)];
+	expectedOut = [arrayfun(@nacho,inputPattern)];
+	expectedOutTest = [arrayfun(@nacho,testPattern)];
 	errorAcumulation = 0;
 	%Epocas
 	% i = 1;
@@ -38,7 +38,7 @@ function ret = mperceptron(n,lengthOut,hidenN, iterations, eta, g, gDerivada, ac
 			inputs_1 = n1;
 			%Propago hacia adelante
 			out_1 = neuron([-1 inputs_1],w_1);
-			inputs_2 = arrayfun(g,out_1);
+			inputs_2 = arrayfun(g,out_1)
 			out_2 = neuron([-1 inputs_2],w_2);
 			%Calculo los delta
 		    delta_2 = arrayfun(gDerivada,out_2).*(expected - out_2);
